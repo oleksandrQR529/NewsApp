@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct News: Codable {
+struct Articles: Codable {
     
     enum CodingKeys: String, CodingKey {
         case status

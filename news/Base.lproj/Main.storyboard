@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GvR-uW-hxa">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="752"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsImgCell" rowHeight="396" id="EfT-Kv-fHX" customClass="NewsTableCell" customModule="news" customModuleProvider="target">
@@ -88,7 +88,7 @@
                                             <outlet property="newsImg" destination="fKf-J0-GNt" id="2VV-1M-GaF"/>
                                             <outlet property="newsSource" destination="sqo-lg-XsZ" id="Kmb-ct-52n"/>
                                             <outlet property="newsTitle" destination="W3S-Sp-jNv" id="Z7b-XG-aOR"/>
-                                            <segue destination="Et5-nn-7NE" kind="presentation" id="Zfr-Lk-qmf"/>
+                                            <segue destination="Et5-nn-7NE" kind="show" id="Zfr-Lk-qmf"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsCell" rowHeight="146" id="Oen-Im-cpe" customClass="NewsCell" customModule="news" customModuleProvider="target">
@@ -152,19 +152,27 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="QWa-mU-KNN">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="GvR-uW-hxa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="5hQ-KK-1Jd"/>
+                            <constraint firstItem="QWa-mU-KNN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="2Xr-tp-u8Y"/>
+                            <constraint firstItem="QWa-mU-KNN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4T1-uC-KSM"/>
+                            <constraint firstItem="QWa-mU-KNN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="8xq-oP-CbR"/>
                             <constraint firstItem="GvR-uW-hxa" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="G5X-eW-ObB"/>
                             <constraint firstAttribute="bottom" secondItem="GvR-uW-hxa" secondAttribute="bottom" id="JCy-0l-1J2"/>
                             <constraint firstItem="GvR-uW-hxa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XSA-Ni-wS4"/>
+                            <constraint firstItem="GvR-uW-hxa" firstAttribute="top" secondItem="QWa-mU-KNN" secondAttribute="bottom" id="k6R-fI-HjQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="News" id="lK2-DJ-z7c" userLabel="News"/>
                     <connections>
                         <outlet property="newsTable" destination="GvR-uW-hxa" id="hi2-dR-A9Y"/>
+                        <outlet property="searchBar" destination="QWa-mU-KNN" id="Rb4-JC-BWZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -176,31 +184,12 @@
             <objects>
                 <viewController id="Et5-nn-7NE" customClass="WebKitVC" customModule="news" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DzW-XT-OYJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdh-zw-Nyq">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="IY9-mf-Qtl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="IY9-mf-Qtl" firstAttribute="trailing" secondItem="fdh-zw-Nyq" secondAttribute="trailing" id="epR-ig-cxZ"/>
-                            <constraint firstAttribute="bottom" secondItem="fdh-zw-Nyq" secondAttribute="bottom" id="kFe-vZ-i30"/>
-                            <constraint firstItem="fdh-zw-Nyq" firstAttribute="leading" secondItem="IY9-mf-Qtl" secondAttribute="leading" id="kQu-zF-eGj"/>
-                            <constraint firstItem="fdh-zw-Nyq" firstAttribute="top" secondItem="IY9-mf-Qtl" secondAttribute="top" id="mjn-69-oex"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0qM-43-TpC"/>
-                    <connections>
-                        <outlet property="webView" destination="fdh-zw-Nyq" id="t9t-Ai-AZ1"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybW-tV-O2B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

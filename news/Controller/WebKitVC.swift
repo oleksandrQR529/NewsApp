@@ -9,11 +9,14 @@ import UIKit
 import WebKit
 
 class WebKitVC: UIViewController, WKNavigationDelegate {
-    @IBOutlet weak var webView: WKWebView?
+    private var webView: WKWebView!
+    var urlString: String?
+    
     
     override func loadView() {
+        webView = WKWebView()
         webView?.navigationDelegate = self
-        //view = webView
+        view = webView
     }
 
     override func viewDidLoad() {
@@ -24,7 +27,7 @@ class WebKitVC: UIViewController, WKNavigationDelegate {
     }
     
     func initWeb() {
-        let url = URL(string: "https://www.hackingwithswift.com")!
+        let url = URL(string: urlString ?? "https://jobs.dou.ua/companies/pecode-software/vacancies/147254/")!
         webView?.load(URLRequest(url: url))
         webView?.allowsBackForwardNavigationGestures = true
     }

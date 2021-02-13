@@ -7,10 +7,6 @@
 
 import Foundation
 
-//struct Articles: Codable{
-//    let articles: [Article]
-//}
-
 struct Article: Codable {
     var source: Source
     var author: String?

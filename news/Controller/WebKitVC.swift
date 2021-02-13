@@ -10,7 +10,7 @@ import WebKit
 
 class WebKitVC: UIViewController, WKNavigationDelegate {
     private var webView: WKWebView!
-    var urlString: String?
+    static var urlString: String?
     
     
     override func loadView() {
@@ -27,7 +27,7 @@ class WebKitVC: UIViewController, WKNavigationDelegate {
     }
     
     func initWeb() {
-        let url = URL(string: urlString ?? "https://jobs.dou.ua/companies/pecode-software/vacancies/147254/")!
+        let url = URL(string: WebKitVC.urlString ?? "")!
         webView?.load(URLRequest(url: url))
         webView?.allowsBackForwardNavigationGestures = true
     }

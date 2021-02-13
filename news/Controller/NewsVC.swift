@@ -13,7 +13,6 @@ class NewsVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     private var articles: [Article] = []
     private var numberOfItemsInSection = 0
-    private var articleUrl: String?
     private let myRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
@@ -36,12 +35,6 @@ class NewsVC: UIViewController {
         searchBar.delegate = self
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let webKitVC = segue.destination as? WebKitVC {
-            webKitVC.urlString = articleUrl ?? ""
-        }
-    }
-    
 }
 
 extension NewsVC {
@@ -50,9 +43,11 @@ extension NewsVC {
         NetworkService.instance.getArticles(dataUrl: "http://newsapi.org/v2/top-headlines?country=us&apiKey=5dd4f29e438c40c88e31f174aab969c0") { (articles) in
             self.articles = articles.articles
             self.numberOfItemsInSection += 5
+            
             if self.numberOfItemsInSection >= self.articles.count {
                 self.numberOfItemsInSection = self.articles.count
             }
+            
             self.sortNewsByPublishedDate()
             self.newsTable.reloadData()
         } onError: { (errorMessage) in
@@ -127,7 +122,7 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        articleUrl = articles[indexPath.row].url
+        WebKitVC.urlString = articles[indexPath.row].url
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

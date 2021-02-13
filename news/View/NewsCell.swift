@@ -1,14 +1,13 @@
 //
-//  NewsTableCellTableViewCell.swift
+//  NewsCell.swift
 //  news
 //
-//  Created by Саша Дранчук on 26.11.2020.
+//  Created by Саша Дранчук on 13.02.2021.
 //
 
 import UIKit
 
-class NewsTableCell: UITableViewCell {
-    @IBOutlet weak var newsImg: UIImageView?
+class NewsCell: UITableViewCell {
     @IBOutlet weak var newsTitle: UILabel!
     @IBOutlet weak var newsSource: UILabel!
     @IBOutlet weak var newsAuthor: UILabel!
@@ -19,6 +18,5 @@ class NewsTableCell: UITableViewCell {
         newsSource?.text = article.source.name ?? ""
         newsAuthor?.text = article.author ?? ""
         newsDescription?.text = article.description ?? ""
-        newsImg?.loadImgFromUrl(urlString: article.urlToImage ?? "")
     }
 }

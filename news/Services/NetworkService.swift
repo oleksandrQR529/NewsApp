@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias OnApiSuccess = (Articles) -> Void
+typealias OnApiSuccess = (News) -> Void
 typealias OnApiError = (String) -> Void
 
 class NetworkService {
@@ -44,7 +44,7 @@ class NetworkService {
             
             do{
                 if response.statusCode == 200 {
-                    let items = try JSONDecoder().decode(Articles.self, from: data)
+                    let items = try JSONDecoder().decode(News.self, from: data)
                     onSuccess(items)
                 }else{
                     onError("Invalid data from response")

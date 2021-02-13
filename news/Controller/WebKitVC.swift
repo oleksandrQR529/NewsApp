@@ -19,6 +19,7 @@ class WebKitVC: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadView()
         initWeb()
     }
     

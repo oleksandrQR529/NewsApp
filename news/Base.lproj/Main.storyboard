@@ -45,20 +45,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ice-TV-ste">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ice-TV-ste">
                                                     <rect key="frame" x="20" y="354.5" width="374" height="20.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Source" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sqo-lg-XsZ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="264" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="182" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZK-wV-KP5">
-                                                            <rect key="frame" x="274" y="0.0" width="100" height="20.5"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="100" id="5N5-Sg-d4t"/>
-                                                            </constraints>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZK-wV-KP5">
+                                                            <rect key="frame" x="192" y="0.0" width="182" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -91,11 +88,11 @@
                                             <segue destination="Et5-nn-7NE" kind="show" id="Zfr-Lk-qmf"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsCell" rowHeight="146" id="Oen-Im-cpe" customClass="NewsCell" customModule="news" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="424" width="414" height="146"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsCell" rowHeight="136" id="Oen-Im-cpe" customClass="NewsCell" customModule="news" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="424" width="414" height="136"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Oen-Im-cpe" id="McZ-H9-DNk">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="146"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="136"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BR-5Y-kFP">
@@ -104,20 +101,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NoU-2b-GfR">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="NoU-2b-GfR">
                                                     <rect key="frame" x="20" y="94.5" width="374" height="20.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Source" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndz-ps-9eU">
-                                                            <rect key="frame" x="0.0" y="0.0" width="264" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="182" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BsW-Pr-adX">
-                                                            <rect key="frame" x="274" y="0.0" width="100" height="20.5"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="100" id="eaU-Ds-nUt"/>
-                                                            </constraints>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BsW-Pr-adX">
+                                                            <rect key="frame" x="192" y="0.0" width="182" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -139,6 +133,7 @@
                                                 <constraint firstItem="5BR-5Y-kFP" firstAttribute="trailing" secondItem="McZ-H9-DNk" secondAttribute="trailingMargin" id="eVo-qb-P2J"/>
                                                 <constraint firstItem="5BR-5Y-kFP" firstAttribute="leading" secondItem="McZ-H9-DNk" secondAttribute="leadingMargin" id="eXP-dP-rlZ"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Y3B-5O-uNI" secondAttribute="trailing" id="hVn-hL-So7"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="NoU-2b-GfR" secondAttribute="bottom" constant="10" id="kS9-jY-UlB"/>
                                                 <constraint firstItem="NoU-2b-GfR" firstAttribute="top" secondItem="Y3B-5O-uNI" secondAttribute="bottom" constant="10" id="pMx-zx-NWi"/>
                                                 <constraint firstItem="Y3B-5O-uNI" firstAttribute="top" secondItem="5BR-5Y-kFP" secondAttribute="bottom" constant="10" id="rm3-k1-TeO"/>
                                             </constraints>

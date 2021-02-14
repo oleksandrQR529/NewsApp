@@ -12,6 +12,7 @@ class NewsVC: UIViewController {
     @IBOutlet weak var newsTable: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     private var articles: [Article] = []
+    private var findItems: [Article] = []
     private var numberOfItemsInSection = 0
     private let myRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -42,11 +43,8 @@ extension NewsVC {
     func getArticles() {
         NetworkService.instance.getArticles(dataUrl: "http://newsapi.org/v2/top-headlines?country=us&apiKey=5dd4f29e438c40c88e31f174aab969c0") { (articles) in
             self.articles = articles.articles
-            self.numberOfItemsInSection += 5
             
-            if self.numberOfItemsInSection >= self.articles.count {
-                self.numberOfItemsInSection = self.articles.count
-            }
+            self.addNumberOfItems()
             
             self.sortNewsByPublishedDate()
             self.newsTable.reloadData()
@@ -62,19 +60,29 @@ extension NewsVC {
     }
     
     func searchNews(request: String) {
-        if let item = articles.first(where: {$0.description?.contains(request) as! Bool}) {
-            articles = []
-            numberOfItemsInSection = 1
-            articles.append(item)
-            newsTable.reloadData()
-        }else {
-            print("Can't find article")
+        numberOfItemsInSection = 0
+        findItems = []
+        articles.forEach { article in
+            if (article.description?.contains(request) ?? false) {
+                findItems.append(article)
+            }
         }
+        articles = findItems
+        addNumberOfItems()
+        newsTable.reloadData()
+        newsTable.tableFooterView?.isHidden = true
     }
     
     func sortNewsByPublishedDate() {
         articles.sort { (article, articleNext) -> Bool in
             article.publishedAt! > articleNext.publishedAt!
+        }
+    }
+    
+    func addNumberOfItems() {
+        numberOfItemsInSection += 5
+        if numberOfItemsInSection >= articles.count {
+            numberOfItemsInSection = articles.count
         }
     }
     
@@ -89,7 +97,6 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if articles[indexPath.row].urlToImage != nil {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "NewsImgCell") as? NewsTableCell {
                 cell.updateCell(article: articles[indexPath.row])
@@ -105,14 +112,13 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
                 return NewsCell()
             }
         }
-        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == numberOfItemsInSection - 1 && numberOfItemsInSection != articles.count {
             let spinner = UIActivityIndicatorView(style: .medium)
             spinner.startAnimating()
-            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(144))
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(100))
             self.newsTable.tableFooterView = spinner
             self.newsTable.tableFooterView?.isHidden = false
         }else {
@@ -126,10 +132,7 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        numberOfItemsInSection += 5
-        if numberOfItemsInSection >= articles.count {
-            numberOfItemsInSection = articles.count
-        }
+        addNumberOfItems()
         newsTable.reloadData()
     }
     

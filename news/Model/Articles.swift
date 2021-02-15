@@ -7,14 +7,7 @@
 
 import Foundation
 
-struct Articles: Codable {
-    
-    enum CodingKeys: String, CodingKey {
-        case status
-        case totalResults
-        case articles
-    }
-    
+struct Articles: Codable {    
     var status: String?
     var totalResults: Int?
     var articles: [Article]

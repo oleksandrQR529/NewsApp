@@ -118,7 +118,6 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
         if indexPath.row == numberOfItemsInSection - 1 && numberOfItemsInSection != articles.count {
             let spinner = UIActivityIndicatorView(style: .medium)
             spinner.startAnimating()
-            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(100))
             self.newsTable.tableFooterView = spinner
             self.newsTable.tableFooterView?.isHidden = false
         }else {

@@ -98,11 +98,11 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if articles[indexPath.row].urlToImage != nil {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "NewsImgCell") as? NewsTableCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "NewsImgCell") as? NewsImgCell {
                 cell.updateCell(article: articles[indexPath.row])
                 return cell
             }else {
-                return NewsTableCell()
+                return NewsImgCell()
             }
         }else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell") as? NewsCell {

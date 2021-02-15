@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewsTableCell: UITableViewCell {
+class NewsImgCell: UITableViewCell {
     @IBOutlet weak var newsImg: UIImageView?
     @IBOutlet weak var newsTitle: UILabel!
     @IBOutlet weak var newsSource: UILabel!
@@ -19,6 +19,6 @@ class NewsTableCell: UITableViewCell {
         newsSource?.text = article.source.name ?? ""
         newsAuthor?.text = article.author ?? ""
         newsDescription?.text = article.description ?? ""
-        newsImg?.loadImgFromUrl(urlString: article.urlToImage ?? "")
+        newsImg?.loadImgFromUrl(urlString: article.urlToImage!)
     }
 }

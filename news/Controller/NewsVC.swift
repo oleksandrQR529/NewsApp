@@ -12,9 +12,15 @@ class NewsVC: UIViewController {
     @IBOutlet weak var newsTable: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     private var articles: [Article] = []
-    private var findItems: [Article] = []
+    private var findItems: [String] = []
     private var numberOfItemsInSection = 0
     var requests: [String] = []
+    let topHeadlinesUrl = "http://newsapi.org/v2/top-headlines?"
+    let everythingUrl = "http://newsapi.org/v2/everything?"
+    let apiKey = "apiKey=5dd4f29e438c40c88e31f174aab969c0"
+    let sortBy = "sortBy=publishedAt&"
+    private let country = "country=us&"
+    private var specificKeywoardToSearch = "q=Apple&"
     private let myRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
@@ -28,7 +34,7 @@ class NewsVC: UIViewController {
     }
     
     private func initUI() {
-        getArticles()
+        getArticles(request: topHeadlinesUrl + country + sortBy + apiKey)
        
         newsTable.dataSource = self
         newsTable.delegate = self
@@ -41,13 +47,12 @@ class NewsVC: UIViewController {
 
 extension NewsVC {
     
-    private func getArticles() {
-        NetworkService.instance.getArticles(dataUrl: "http://newsapi.org/v2/top-headlines?country=us&apiKey=5dd4f29e438c40c88e31f174aab969c0") { (articles) in
+    private func getArticles(request: String) {
+        NetworkService.instance.getArticles(dataUrl: request) { (articles) in
             self.articles = articles.articles
             
             self.addNumberOfItems()
             
-            self.sortNewsByPublishedDate()
             self.newsTable.reloadData()
         } onError: { (errorMessage) in
             debugPrint(errorMessage)
@@ -56,42 +61,17 @@ extension NewsVC {
     }
     
     @objc private func refresh(sender: UIRefreshControl) {
-        getArticles()
+        getArticles(request: topHeadlinesUrl + country + apiKey)
         sender.endRefreshing()
     }
     
     func searchNews() {
         numberOfItemsInSection = 0
-        findItems = []
-        articles.forEach { article in
-            requests.forEach { request in
-                if (self.didArticleContainsRequest(article: article, request: request)) {
-                    findItems.append(article)
-                }
-            }
+        var request = ""
+        requests.forEach { item in
+            request += item
         }
-        articles = findItems
-        addNumberOfItems()
-        newsTable.reloadData()
-        newsTable.tableFooterView?.isHidden = true
-    }
-    
-    private func didArticleContainsRequest(article: Article, request: String) -> Bool {
-        if (article.description?.contains(request) ?? false) {
-            return true
-        }else if (article.author?.contains(request) ?? false) {
-            return true
-        }else if (article.source.name?.contains(request) ?? false) {
-            return true
-        }else {
-            return false
-        }
-    }
-    
-    private func sortNewsByPublishedDate() {
-        articles.sort { (article, articleNext) -> Bool in
-            article.publishedAt! > articleNext.publishedAt!
-        }
+        getArticles(request: request)
     }
     
     private func addNumberOfItems() {
@@ -157,8 +137,11 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
 extension NewsVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.requests = []
-        self.requests.append(searchBar.text ?? "")
+        requests = []
+        requests.append(everythingUrl)
+        specificKeywoardToSearch = "q=" + (searchBar.text ?? "") + "&"
+        requests.append(specificKeywoardToSearch)
+        requests.append(apiKey)
         self.searchNews()
     }
     

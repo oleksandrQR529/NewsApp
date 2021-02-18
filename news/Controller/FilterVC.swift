@@ -9,7 +9,7 @@ import UIKit
 
 class FilterVC: UIViewController {
     
-    private let filterTypes: [String] = ["Category", "Sources"]
+    private let filterTypes: [String] = ["Category", "Country", "Sources"]
     @IBOutlet weak var filterTable: UITableView!
     
 

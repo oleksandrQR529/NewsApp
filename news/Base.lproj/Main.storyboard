@@ -303,15 +303,10 @@
                             <constraint firstItem="Ozb-rI-2Zk" firstAttribute="top" secondItem="vvs-MV-L8G" secondAttribute="top" id="wkO-BI-Qnj"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Nbg-b4-KLf">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="FPX-c1-3Oq">
-                            <connections>
-                                <segue destination="ab9-7I-qWQ" kind="unwind" unwindAction="unwindFromNewsVCWithUnwindSegue:" id="6jv-oa-3EK"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Nbg-b4-KLf"/>
                     <connections>
                         <outlet property="parametersTable" destination="Ozb-rI-2Zk" id="4f5-1f-Glz"/>
+                        <segue destination="ab9-7I-qWQ" kind="unwind" identifier="unwindFromNewsVC" unwindAction="unwindFromNewsVCWithUnwindSegue:" id="sc4-8I-WAL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q57-2F-57R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

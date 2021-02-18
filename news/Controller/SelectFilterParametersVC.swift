@@ -12,7 +12,11 @@ class SelectFilterParametersVC: UIViewController {
     var filterType: String?
     private var articles: Articles?
     private var filterParameters: [String] = []
-    private var request: [String] = []
+    private var request: String?
+    private var categories: [String] = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
+    private var countries: [String] = ["ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co", "cu", "cz", "de", "eg", "fr", "gb", "gr", "hk", "hu", "id", "ie", "il", "in", "it", "jp", "kr", "lt", "lv", "ma", "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro", "rs", "ru", "sa", "se", "sg", "si", "sk", "th", "tr", "tw", "ua", "us", "ve", "za"]
+    private var requestHead = "q="
+    private let requestEnd = "&"
     @IBOutlet weak var parametersTable: UITableView!
     
     override func viewDidLoad() {
@@ -31,9 +35,12 @@ class SelectFilterParametersVC: UIViewController {
         case "Category":
             getCategories()
             break
-        case "Sources":
-            getSources()
+        case "Country":
+            getCountry()
             break
+        case "Sources":
+            request = ""
+            getSources()
         default:
             break
         }
@@ -44,20 +51,32 @@ class SelectFilterParametersVC: UIViewController {
 extension SelectFilterParametersVC {
     
     private func getCategories() {
-        articles?.articles.forEach { article in
-            filterParameters.append(article.author ?? "")
-        }
+        filterParameters = categories
+        requestHead = "category="
+    }
+    
+    private func getCountry() {
+        filterParameters = countries
+        requestHead = "country="
     }
     
     private func getSources() {
+        requestHead = "sources="
         articles?.articles.forEach { article in
-            filterParameters.append(article.source.name ?? "")
+            if let item = article.source.id {
+                filterParameters.append(item)
+            }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? NewsVC else { return }
-        destination.requests = self.request
+        destination.requests = []
+        destination.requests.append(destination.topHeadlinesUrl)
+        destination.requests.append(request!)
+        destination.requests.append(destination.sortBy)
+        destination.requests.append(destination.apiKey)
+        print("Request: \(destination.requests)")
         destination.searchNews()
     }
     
@@ -81,8 +100,10 @@ extension SelectFilterParametersVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? FilterCell else { return }
-        request.append(cell.filterTypeLbl.text ?? "")
+        request = requestHead + cell.filterTypeLbl.text! + requestEnd
         cell.accessoryType = .checkmark
+        
+        self.performSegue(withIdentifier: "unwindFromNewsVC", sender: self)
     }
     
 }

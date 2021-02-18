@@ -12,13 +12,8 @@ class NewsVC: UIViewController {
     @IBOutlet weak var newsTable: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     private var articles: [Article] = []
-    private var findItems: [String] = []
     private var numberOfItemsInSection = 0
-    var requests: [String] = []
-    let topHeadlinesUrl = "http://newsapi.org/v2/top-headlines?"
-    let everythingUrl = "http://newsapi.org/v2/everything?"
-    let apiKey = "apiKey=5dd4f29e438c40c88e31f174aab969c0"
-    let sortBy = "sortBy=publishedAt&"
+    var request: String = ""
     private let country = "country=us&"
     private var specificKeywoardToSearch = "q=Apple&"
     private let myRefreshControl: UIRefreshControl = {
@@ -34,7 +29,7 @@ class NewsVC: UIViewController {
     }
     
     private func initUI() {
-        getArticles(request: topHeadlinesUrl + country + sortBy + apiKey)
+        getArticles(request: NetworkService.instance.topHeadlineUrl + country + NetworkService.instance.sortBy + NetworkService.instance.apiKey)
        
         newsTable.dataSource = self
         newsTable.delegate = self
@@ -42,7 +37,6 @@ class NewsVC: UIViewController {
         
         searchBar.delegate = self
     }
-    
 }
 
 extension NewsVC {
@@ -61,17 +55,13 @@ extension NewsVC {
     }
     
     @objc private func refresh(sender: UIRefreshControl) {
-        getArticles(request: topHeadlinesUrl + country + apiKey)
+        getArticles(request: NetworkService.instance.topHeadlineUrl + country + NetworkService.instance.apiKey)
         sender.endRefreshing()
     }
     
     func searchNews() {
         numberOfItemsInSection = 0
-        var request = ""
-        requests.forEach { item in
-            request += item
-        }
-        getArticles(request: request)
+        getArticles(request: self.request)
     }
     
     private func addNumberOfItems() {
@@ -79,6 +69,15 @@ extension NewsVC {
         if numberOfItemsInSection >= articles.count {
             numberOfItemsInSection = articles.count
         }
+    }
+    
+    func appendRequest(request: String) {
+        self.request = ""
+        self.request.append(NetworkService.instance.topHeadlineUrl)
+        self.request.append(request)
+        self.request.append(NetworkService.instance.sortBy)
+        self.request.append(NetworkService.instance.apiKey)
+        searchNews()
     }
     
     @IBAction func unwindFromNewsVC(unwindSegue: UIStoryboardSegue){}
@@ -137,11 +136,11 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
 extension NewsVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        requests = []
-        requests.append(everythingUrl)
+        request = ""
+        request.append(NetworkService.instance.everythingUrl)
         specificKeywoardToSearch = "q=" + (searchBar.text ?? "") + "&"
-        requests.append(specificKeywoardToSearch)
-        requests.append(apiKey)
+        request.append(specificKeywoardToSearch)
+        request.append(NetworkService.instance.apiKey)
         self.searchNews()
     }
     

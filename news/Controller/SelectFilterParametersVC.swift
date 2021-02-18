@@ -13,10 +13,8 @@ class SelectFilterParametersVC: UIViewController {
     private var articles: Articles?
     private var filterParameters: [String] = []
     private var request: String?
-    private var categories: [String] = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
-    private var countries: [String] = ["ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co", "cu", "cz", "de", "eg", "fr", "gb", "gr", "hk", "hu", "id", "ie", "il", "in", "it", "jp", "kr", "lt", "lv", "ma", "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro", "rs", "ru", "sa", "se", "sg", "si", "sk", "th", "tr", "tw", "ua", "us", "ve", "za"]
     private var requestHead = "q="
-    private let requestEnd = "&"
+    private var unwindId = ""
     @IBOutlet weak var parametersTable: UITableView!
     
     override func viewDidLoad() {
@@ -34,13 +32,16 @@ class SelectFilterParametersVC: UIViewController {
         switch filterType {
         case "Category":
             getCategories()
+            unwindId = "unwindFromFilterVC"
             break
         case "Country":
             getCountry()
+            unwindId = "unwindFromFilterVC"
             break
         case "Sources":
             request = ""
             getSources()
+            unwindId = "unwindFromNewsVC"
         default:
             break
         }
@@ -51,12 +52,12 @@ class SelectFilterParametersVC: UIViewController {
 extension SelectFilterParametersVC {
     
     private func getCategories() {
-        filterParameters = categories
+        filterParameters = NetworkService.instance.categories
         requestHead = "category="
     }
     
     private func getCountry() {
-        filterParameters = countries
+        filterParameters = NetworkService.instance.countries
         requestHead = "country="
     }
     
@@ -70,14 +71,12 @@ extension SelectFilterParametersVC {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? NewsVC else { return }
-        destination.requests = []
-        destination.requests.append(destination.topHeadlinesUrl)
-        destination.requests.append(request!)
-        destination.requests.append(destination.sortBy)
-        destination.requests.append(destination.apiKey)
-        print("Request: \(destination.requests)")
-        destination.searchNews()
+        if let destination = segue.destination as? NewsVC {
+            destination.appendRequest(request: request!)
+        }else if let destination = segue.destination as? FilterVC {
+            destination.request.append(request!)
+        }
+        
     }
     
 }
@@ -100,10 +99,10 @@ extension SelectFilterParametersVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? FilterCell else { return }
-        request = requestHead + cell.filterTypeLbl.text! + requestEnd
+        request = requestHead + cell.filterTypeLbl.text! + NetworkService.instance.requestEnd
         cell.accessoryType = .checkmark
         
-        self.performSegue(withIdentifier: "unwindFromNewsVC", sender: self)
+        self.performSegue(withIdentifier: unwindId, sender: self)
     }
     
 }

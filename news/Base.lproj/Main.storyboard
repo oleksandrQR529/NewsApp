@@ -246,12 +246,19 @@
                             <constraint firstItem="ijI-xO-r09" firstAttribute="leading" secondItem="XU4-8G-JaO" secondAttribute="leading" id="xnk-GS-4IX"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="moP-Ap-Ceg"/>
+                    <navigationItem key="navigationItem" id="moP-Ap-Ceg">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="00J-2i-wQ7">
+                            <connections>
+                                <segue destination="Vhp-ur-w8C" kind="unwind" unwindAction="unwindFromNewsVCWithUnwindSegue:" id="LoJ-Tl-F4Z"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="filterTable" destination="ijI-xO-r09" id="eUi-Dt-mf8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Vh-c2-BAJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Vhp-ur-w8C" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="931.88405797101461" y="789.50892857142856"/>
         </scene>
@@ -307,6 +314,7 @@
                     <connections>
                         <outlet property="parametersTable" destination="Ozb-rI-2Zk" id="4f5-1f-Glz"/>
                         <segue destination="ab9-7I-qWQ" kind="unwind" identifier="unwindFromNewsVC" unwindAction="unwindFromNewsVCWithUnwindSegue:" id="sc4-8I-WAL"/>
+                        <segue destination="ab9-7I-qWQ" kind="unwind" identifier="unwindFromFilterVC" unwindAction="unwindFromFilterVCWithUnwindSegue:" id="ZYb-fh-zv9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q57-2F-57R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

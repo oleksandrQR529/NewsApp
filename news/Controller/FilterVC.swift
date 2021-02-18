@@ -9,7 +9,7 @@ import UIKit
 
 class FilterVC: UIViewController {
     
-    private let filterTypes: [String] = ["Category", "Country", "Sources"]
+    var request: String = ""
     @IBOutlet weak var filterTable: UITableView!
     
 
@@ -20,6 +20,9 @@ class FilterVC: UIViewController {
     }
     
     private func initUI() {
+        request = ""
+        request.append(NetworkService.instance.topHeadlineUrl)
+        
         filterTable.dataSource = self
         filterTable.delegate = self
     }
@@ -29,21 +32,27 @@ class FilterVC: UIViewController {
 extension FilterVC {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? SelectFilterParametersVC else { return }
-        let cell = filterTable.cellForRow(at: filterTable.indexPathForSelectedRow!) as? FilterCell
-        destination.filterType = cell?.filterTypeLbl.text ?? ""
+        if let destination = segue.destination as? SelectFilterParametersVC {
+            let cell = filterTable.cellForRow(at: filterTable.indexPathForSelectedRow!) as? FilterCell
+            destination.filterType = cell?.filterTypeLbl.text ?? ""
+        }else if let destination = segue.destination as? NewsVC {
+            destination.appendRequest(request: self.request)
+        }
+        
     }
+    
+    @IBAction func unwindFromFilterVC(unwindSegue: UIStoryboardSegue){}
 }
 
 //MARK:- Data source & delegate extensions
 extension FilterVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterTypes.count
+        return NetworkService.instance.filterTypes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell") as? FilterCell {
-            cell.updateCell(filterTypes[indexPath.row])
+            cell.updateCell(NetworkService.instance.filterTypes[indexPath.row])
             cell.accessoryType = .disclosureIndicator
             return cell
         }else {

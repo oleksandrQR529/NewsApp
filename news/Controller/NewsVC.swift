@@ -14,6 +14,7 @@ class NewsVC: UIViewController {
     private var articles: [Article] = []
     private var findItems: [Article] = []
     private var numberOfItemsInSection = 0
+    var requests: [String] = []
     private let myRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
@@ -26,7 +27,7 @@ class NewsVC: UIViewController {
         initUI()
     }
     
-    func initUI() {
+    private func initUI() {
         getArticles()
        
         newsTable.dataSource = self
@@ -40,7 +41,7 @@ class NewsVC: UIViewController {
 
 extension NewsVC {
     
-    func getArticles() {
+    private func getArticles() {
         NetworkService.instance.getArticles(dataUrl: "http://newsapi.org/v2/top-headlines?country=us&apiKey=5dd4f29e438c40c88e31f174aab969c0") { (articles) in
             self.articles = articles.articles
             
@@ -59,12 +60,14 @@ extension NewsVC {
         sender.endRefreshing()
     }
     
-    func searchNews(request: String) {
+    func searchNews() {
         numberOfItemsInSection = 0
         findItems = []
         articles.forEach { article in
-            if (article.description?.contains(request) ?? false) {
-                findItems.append(article)
+            requests.forEach { request in
+                if (self.didArticleContainsRequest(article: article, request: request)) {
+                    findItems.append(article)
+                }
             }
         }
         articles = findItems
@@ -73,18 +76,32 @@ extension NewsVC {
         newsTable.tableFooterView?.isHidden = true
     }
     
-    func sortNewsByPublishedDate() {
+    private func didArticleContainsRequest(article: Article, request: String) -> Bool {
+        if (article.description?.contains(request) ?? false) {
+            return true
+        }else if (article.author?.contains(request) ?? false) {
+            return true
+        }else if (article.source.name?.contains(request) ?? false) {
+            return true
+        }else {
+            return false
+        }
+    }
+    
+    private func sortNewsByPublishedDate() {
         articles.sort { (article, articleNext) -> Bool in
             article.publishedAt! > articleNext.publishedAt!
         }
     }
     
-    func addNumberOfItems() {
+    private func addNumberOfItems() {
         numberOfItemsInSection += 5
         if numberOfItemsInSection >= articles.count {
             numberOfItemsInSection = articles.count
         }
     }
+    
+    @IBAction func unwindFromNewsVC(unwindSegue: UIStoryboardSegue){}
     
 }
 
@@ -140,7 +157,9 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
 extension NewsVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.searchNews(request: searchBar.text ?? "")
+        self.requests = []
+        self.requests.append(searchBar.text ?? "")
+        self.searchNews()
     }
     
 }

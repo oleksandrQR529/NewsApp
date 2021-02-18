@@ -9,6 +9,7 @@ import UIKit
 import WebKit
 
 class WebKitVC: UIViewController, WKNavigationDelegate {
+    
     private var webView: WKWebView!
     static var urlString: String?
     

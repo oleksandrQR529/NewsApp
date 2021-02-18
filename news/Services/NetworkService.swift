@@ -12,6 +12,7 @@ typealias OnApiError = (String) -> Void
 
 class NetworkService {
     static let instance = NetworkService()
+    private(set) var data: Articles?
     
     let session = URLSession(configuration: .default)
     
@@ -22,6 +23,7 @@ class NetworkService {
             
             self.connectToURl(error: error, response: response, data: data) { (articles) in
                 onSuccess(articles)
+                self.data = articles
             } onError: { (errorMessage) in
                 onError(errorMessage)
             }

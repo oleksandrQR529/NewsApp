@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y1V-DD-BNS">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -143,6 +144,7 @@
                                             <outlet property="newsDescription" destination="Y3B-5O-uNI" id="mbA-gI-Yji"/>
                                             <outlet property="newsSource" destination="ndz-ps-9eU" id="9KD-0y-7Hq"/>
                                             <outlet property="newsTitle" destination="5BR-5Y-kFP" id="RdM-Px-b0x"/>
+                                            <segue destination="Et5-nn-7NE" kind="show" id="S5x-kH-sua"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -345,6 +347,9 @@
             <point key="canvasLocation" x="21.739130434782609" y="73.660714285714278"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Zfr-Lk-qmf"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -55,7 +55,7 @@ extension NewsVC {
     }
     
     @objc private func refresh(sender: UIRefreshControl) {
-        getArticles(request: NetworkService.instance.topHeadlineUrl + country + NetworkService.instance.apiKey)
+        getArticles(request: NetworkService.instance.topHeadlineUrl + country + NetworkService.instance.sortBy + NetworkService.instance.apiKey)
         sender.endRefreshing()
     }
     
@@ -112,7 +112,7 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == numberOfItemsInSection - 1 && numberOfItemsInSection != articles.count {
-            let spinner = UIActivityIndicatorView(style: .medium)
+            let spinner = UIActivityIndicatorView(style: .gray)
             spinner.startAnimating()
             self.newsTable.tableFooterView = spinner
             self.newsTable.tableFooterView?.isHidden = false
@@ -142,6 +142,11 @@ extension NewsVC: UISearchBarDelegate {
         request.append(specificKeywoardToSearch)
         request.append(NetworkService.instance.apiKey)
         self.searchNews()
+        view.endEditing(true)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
 }

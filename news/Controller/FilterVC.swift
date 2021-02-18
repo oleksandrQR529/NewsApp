@@ -21,7 +21,6 @@ class FilterVC: UIViewController {
     
     private func initUI() {
         request = ""
-        request.append(NetworkService.instance.topHeadlineUrl)
         
         filterTable.dataSource = self
         filterTable.delegate = self

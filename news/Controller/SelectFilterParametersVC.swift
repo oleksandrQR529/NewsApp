@@ -24,6 +24,8 @@ class SelectFilterParametersVC: UIViewController {
     }
     
     private func initUI() {
+        request = ""
+        
         self.articles = NetworkService.instance.data
         
         parametersTable.dataSource = self
